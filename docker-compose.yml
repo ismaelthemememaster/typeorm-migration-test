@@ -1,0 +1,20 @@
+version: "3"
+services:
+  migration-test-database:
+    container_name: 'postgres_migration_test'
+    image: 'postgres:latest'
+    restart: no
+    networks:
+      - back-end-migration-test
+    volumes:
+      - migration-test-database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - ${DB_PORT}:5432
+networks:
+  back-end-migration-test:
+volumes:
+  migration-test-database:
