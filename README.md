@@ -52,11 +52,19 @@ $ npm run start:prod
 
 ## Modifying the database
 
-When modifying the database (for example, adding a new column or removing an existing one from a table) you need to create a migration (and a new seed, if the modified tables requires data to work after initializing a local database)
+When modifying the database (for example, adding a new column or removing an existing one from a table) you need to update the entities, then create a migration and run it (and also create and run a new seed, if the modified tables requires data to work after initializing a local database)
 
-First modify the database using a database manager, after the database has the right changes, run the next line after adding your migration's name in kebab-case:
-(If you're not using windows remove :win from the next line)
+Now, why not just run a simple sql query or modify the table on dbeaver?
+By creating and running migrations you keep a history of changes, which can be ran after running init by other devs using one line.
+
+First, modify the entities, after the entities have the right changes, run the next line after adding your migration's name in kebab-case:
 
 ```bash
 $ npm run migration:generate -n ./src/database/migrations/your-migration-name
 ```
+
+This will crate a new migration file, which should only contain whatever changes you have made
+(Do not trust these migrations, review they are exactly what you want.
+One time we renamed a column, but the migration file decided this was not a rename, but the deletion and creation of a new column)
+
+A migration is a comparison between your entities and whatever is on your db, whatever changes your entities present which are not reflected on the db will be included on the migration, so you must have the right credentials on your .env file and make sure you have the latest files on your pc, otherwise you could effectively be duplicating or reversing migrations.
