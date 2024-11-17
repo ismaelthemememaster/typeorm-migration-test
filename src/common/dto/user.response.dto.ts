@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 /** @application */
-import { User } from '../../src/database/entities/User';
+import { User } from '../../database/entities/User';
 
 @Expose()
 export class UserResponseDto {
